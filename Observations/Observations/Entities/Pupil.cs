@@ -16,4 +16,21 @@ namespace Observations.Entities
 
         public object Photo { get; set; }
     }
+
+    public class PupilSurname
+    {
+        public string Forename { get; set; }
+
+        public List<Pupil> Pupils { get; set; }
+    }
+
+    public class GroupInfoList<T> : List<object>
+    {
+        public object Key { get; set; }
+
+        public new IEnumerator<object> GetEnumerator()
+        {
+            return (System.Collections.Generic.IEnumerator<object>)base.GetEnumerator();
+        }
+    }
 }

@@ -3,6 +3,7 @@ using Parse;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Observations.Parse
@@ -77,7 +78,7 @@ namespace Observations.Parse
             try
             {
                 var query = ParseObject.GetQuery("Pupil");
-                IEnumerable<ParseObject> results = await query.FindAsync();
+                IEnumerable<ParseObject> results = await query.FindAsync().ConfigureAwait(false);
                 List<Pupil> pupils = new List<Pupil>();
                 foreach (var parseObject in results)
                 {
@@ -92,8 +93,76 @@ namespace Observations.Parse
             {
                 throw;
             }
-
         }
+
+        public async Task<List<PupilSurname>> GetAllPupilsByClassGroupBySurname(string ClassId)
+        {
+            try
+            {
+                var query = ParseObject.GetQuery("Pupil");
+                IEnumerable<ParseObject> results = await query.FindAsync().ConfigureAwait(false);
+
+                var pupils = new List<Pupil>();
+                foreach (var parseObject in results)
+                {
+                    Pupil p = GetPupilFromParseObject(parseObject);
+
+                    pupils.Add(p);
+                }
+
+                var PupilsBySurname = pupils.GroupBy(x => x.Surname)
+                    .Select(x => new PupilSurname { Forename = x.Key, Pupils = x.ToList() });
+                return PupilsBySurname.ToList();
+
+            }
+            catch (ParseException ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<GroupInfoList<object>>> GetGroupsByLetter()
+        {
+            List<GroupInfoList<object>> groups = new List<GroupInfoList<object>>();
+
+            try
+            {
+                var query = ParseObject.GetQuery("Pupil");
+                IEnumerable<ParseObject> results = await query.FindAsync().ConfigureAwait(false);
+
+                var pupils = new List<Pupil>();
+                foreach (var parseObject in results)
+                {
+                    Pupil p = GetPupilFromParseObject(parseObject);
+
+                    pupils.Add(p);
+                }
+
+                var query2 = from item in pupils
+                            orderby ((Pupil)item).Surname
+                            group item by ((Pupil)item).Surname[0] into g
+                            select new { GroupName = g.Key, Items = g };
+
+                foreach (var g in query2)
+                {
+                    GroupInfoList<object> info = new GroupInfoList<object>();
+                    info.Key = g.GroupName;
+                    foreach (var item in g.Items)
+                    {
+                        info.Add(item);
+                    }
+                    groups.Add(info);
+                }
+                return groups;
+            }
+            catch (ParseException ex)
+            {
+                throw;
+            }
+
+            //var query
+        }
+
 
         /// <summary>
         /// Returns a pupil object from a parse object

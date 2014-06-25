@@ -1,5 +1,6 @@
 ﻿using Observations.Entities;
 using Observations.Parse;
+using Observations.Windows.Views;
 using Parse;
 using System;
 using System.Collections.Generic;
@@ -104,6 +105,11 @@ namespace Observations.Windows
                 Surname.Text = p.Surname;
                 DOB.Date = p.DateOfBirth;
             }
+        }
+
+        private void ShowPupils_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(PupilListView));
         }
 
 

@@ -33,6 +33,7 @@
             <Button Name="GetAllPupil" Content="Get all pupil" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="GetAllPupil_Click"/>
             <ComboBox Name="ListOfPupils" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ListOfPupils_SelectionChanged"/>
             <Button Name="DeletePupil" Content="Delete pupil" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="DeletePupil_Click"/>
+            <Button Name="ShowPupils" Content="Show pupil's" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ShowPupils_Click"/>
         </StackPanel>
         
 

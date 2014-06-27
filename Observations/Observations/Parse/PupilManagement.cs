@@ -14,11 +14,11 @@ namespace Observations.Parse
         public async void SavePupil(Pupil pupil)
         {
             ParseObject pupilParse = new ParseObject("Pupil");
-            pupilParse.ObjectId = pupil.Id;
+            pupilParse.ObjectId = (string.IsNullOrEmpty(pupil.Id)) ? null : pupil.Id;
             pupilParse["Forename"] = pupil.Forename;
             pupilParse["Surname"] = pupil.Surname;
             pupilParse["DOB"] = pupil.DateOfBirth;
-            pupilParse["Photo"] = pupil.Photo;
+            pupilParse["Photo"] = pupil.Image;
 
             await pupilParse.SaveAsync();
         }
@@ -78,12 +78,13 @@ namespace Observations.Parse
             try
             {
                 var query = ParseObject.GetQuery("Pupil");
-                IEnumerable<ParseObject> results = await query.FindAsync().ConfigureAwait(false);
+                //IEnumerable<ParseObject> results = await query.FindAsync().ConfigureAwait(false);
+                IEnumerable<ParseObject> results = await query.FindAsync();
                 List<Pupil> pupils = new List<Pupil>();
                 foreach (var parseObject in results)
                 {
                     Pupil p = GetPupilFromParseObject(parseObject);
-
+                    
                     pupils.Add(p);
                 }
 
@@ -111,7 +112,7 @@ namespace Observations.Parse
                 }
 
                 var PupilsBySurname = pupils.GroupBy(x => x.Surname)
-                    .Select(x => new PupilSurname { Forename = x.Key, Pupils = x.ToList() });
+                    .Select(x => new PupilSurname { Surname = x.Key.ToString(), Pupils = x.ToList() });
                 return PupilsBySurname.ToList();
 
             }
@@ -176,9 +177,26 @@ namespace Observations.Parse
             p.Forename = pupilParse.Get<string>("Forename");
             p.Surname = pupilParse.Get<string>("Surname");
             p.DateOfBirth = pupilParse.Get<DateTime>("DOB");
-            p.Photo = pupilParse.Get<byte[]>("Photo");
+            //p.Image = pupilParse.Get<string>("Photo");
+            p.Image = GetRandomImage();
 
             return p;
+        }
+
+        private string GetRandomImage()
+        {
+            Random r = new Random(1);
+            switch (r.Next(3))
+            {
+                case 1:
+                    return "http://cf2.imgobject.com/t/p/w500/bueVXkpCDPX0TlsWd3Uk7QKO3kD.jpg";
+                case 2:
+                    return "http://cf2.imgobject.com/t/p/w500/mzlw8rHGUSDobS1MJgz8jXXPM06.jpg";
+                case 3:
+                    return "http://cf2.imgobject.com/t/p/w500/5LjbAjkPBUOD9N2QFPSuTyhomx4.jpg";
+                default:
+                    return "http://cf2.imgobject.com/t/p/w500/bueVXkpCDPX0TlsWd3Uk7QKO3kD.jpg";
+            }
         }
     }
 }

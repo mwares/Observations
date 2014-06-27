@@ -10,7 +10,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Observations.Windows.Common
+namespace Observations.WindowsRT.Common
 {
     /// <summary>
     /// NavigationHelper aids in navigation between pages.  It provides commands used to 

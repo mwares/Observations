@@ -11,7 +11,7 @@ using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Observations.Windows.Common
+namespace Observations.WindowsRT.Common
 {
     /// <summary>
     /// SuspensionManager captures global session state to simplify process lifetime management

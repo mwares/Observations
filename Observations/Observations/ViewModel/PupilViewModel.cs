@@ -11,29 +11,25 @@ namespace Observations.ViewModel
 {
     public class PupilViewModel
     {
-        //public List<PupilSurname> Pupils { get; set; }
-        public NotifyTaskCompletion<List<PupilSurname>> Pupils { get; private set; }
-        public NotifyTaskCompletion<List<GroupInfoList<object>>> PupilsBySurnameLetter { get; private set; }
-
+        public List<PupilSurname> Items { get; set; }
         public PupilViewModel()
         {
-            PupilManagement pm = new PupilManagement();
-            Pupils = new NotifyTaskCompletion<List<PupilSurname>>(pm.GetAllPupilsByClassGroupBySurname("ClassId"));
-            PupilsBySurnameLetter = new NotifyTaskCompletion<List<GroupInfoList<object>>>(pm.GetGroupsByLetter());
-
-            
-            //Pupils = PupilsBySurname.ToList();
         }
 
-        private async Task<List<Pupil>> GetAllPupilsByClassAsync(string ClassId)
+        public async Task LoadDataAsync()
         {
             PupilManagement pm = new PupilManagement();
-            return await pm.GetAllPupilsByClass("ClassId");
+            var pupils = await pm.GetAllPupilsByClass("ClassId");
 
-
-
-
+            var pupilsBySurname = pupils.GroupBy(x => x.Surname[0])
+                .Select(x => new PupilSurname { Surname = x.Key.ToString(), Pupils = x.ToList() })
+                .OrderBy(x => x.Surname);
+            Items = pupilsBySurname.ToList();
         }
 
+        public async Task AddPupil()
+        {
+
+        }
     }
 }

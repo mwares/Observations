@@ -6,7 +6,7 @@
             Version="1.0.0.0" />
 
   <Properties>
-    <DisplayName>Observations.Windows</DisplayName>
+    <DisplayName>Observations.WindowsRT</DisplayName>
     <PublisherDisplayName>mark.wares</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -23,12 +23,12 @@
   <Applications>
     <Application Id="App"
         Executable="$targetnametoken$.exe"
-        EntryPoint="Observations.Windows.App">
+        EntryPoint="Observations.WindowsRT.App">
         <m2:VisualElements
-            DisplayName="Observations.Windows"
+            DisplayName="Observations.WindowsRT"
             Square150x150Logo="Assets\Logo.png"
             Square30x30Logo="Assets\SmallLogo.png"
-            Description="Observations.Windows"
+            Description="Observations.WindowsRT"
             ForegroundText="light"
             BackgroundColor="#464646">
             <m2:SplashScreen Image="Assets\SplashScreen.png" />

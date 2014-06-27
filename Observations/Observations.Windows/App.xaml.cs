@@ -18,7 +18,7 @@ using Parse;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
-namespace Observations.Windows
+namespace Observations.WindowsRT
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.

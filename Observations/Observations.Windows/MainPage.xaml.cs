@@ -1,6 +1,6 @@
 ﻿using Observations.Entities;
 using Observations.Parse;
-using Observations.Windows.Views;
+using Observations.WindowsRT.Views;
 using Parse;
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace Observations.Windows
+namespace Observations.WindowsRT
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.

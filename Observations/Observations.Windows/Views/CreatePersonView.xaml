@@ -14,7 +14,23 @@
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
         <x:String x:Key="AppName">My Application</x:String>
     </Page.Resources>
-
+    
+    <Page.TopAppBar>
+        <CommandBar>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton x:Name="TakePhoto" Label="Take Photo" Icon="AddFriend"  Click="TakePhoto_Click" />
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.TopAppBar>
+    
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton x:Name="Save" Label="Save" Icon="Save" Click="Save_Click"/>
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+    
     <!--
         This grid acts as a root panel for the page that defines two rows:
         * Row 0 contains the back button and page title
@@ -46,5 +62,34 @@
             <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
         </Grid>
+        
+        <!-- screen layout -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="140"/>
+                <RowDefinition Height="140"/>
+                <RowDefinition Height="140"/>
+                <RowDefinition Height="140"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+			<Image x:Name="Photo" Source="ms-appx:///Assets/765-default-person.png" HorizontalAlignment="Left" Stretch="UniformToFill" Height="140" Width="150"  VerticalAlignment="Top" />
+            <TextBlock Text="Forename" Grid.Column="1" FontSize="24.67" VerticalAlignment="Center"/>
+            <TextBox x:Name="Forename" Grid.Column="2" FontSize="24.67" Height="45" Margin="10,0,10,0"/>
+            <TextBlock Text="Surname" Grid.Column="3" FontSize="24.67" VerticalAlignment="Center"/>
+            <TextBox x:Name="Surname" Grid.Column="4" FontSize="24.67" Height="45" Margin="10,0,10,0"/>
+            <TextBlock Text="Date of Birth" Grid.Row="1" Grid.Column="1" FontSize="24.67" VerticalAlignment="Center"/>
+            <TextBox x:Name="DOB" Grid.Row="1" Grid.Column="2" FontSize="24.67" Height="45" Margin="10,0,10,0"/>
+
+        </Grid>
     </Grid>
+    
 </common:LayoutAwarePage>

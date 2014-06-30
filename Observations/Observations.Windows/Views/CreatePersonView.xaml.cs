@@ -13,6 +13,12 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Media.Capture;
+using Windows.Storage;
+using Windows.Storage.AccessCache;
+using Windows.Storage.Streams;
+using Windows.UI.Xaml.Media.Imaging;
+using Observations.ViewModel;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -27,13 +33,9 @@ namespace Observations.WindowsRT.Views
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        /// <summary>
-        /// This can be changed to a strongly typed view model.
-        /// </summary>
-        public ObservableDictionary DefaultViewModel
-        {
-            get { return this.defaultViewModel; }
-        }
+        MainPage rootPage = MainPage.Current;
+
+        PupilViewModel pupilsViewModel;
 
         /// <summary>
         /// NavigationHelper is used on each page to aid in navigation and 
@@ -51,6 +53,8 @@ namespace Observations.WindowsRT.Views
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.navigationHelper.SaveState += navigationHelper_SaveState;
+
+            pupilsViewModel = new PupilViewModel();
         }
 
         /// <summary>
@@ -102,5 +106,43 @@ namespace Observations.WindowsRT.Views
         }
 
         #endregion
+
+        private async void TakePhoto_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CameraCaptureUI dialog = new CameraCaptureUI();
+                Size aspectRatio = new Size(7, 5);
+                dialog.PhotoSettings.CroppedAspectRatio = aspectRatio;
+
+                StorageFile file = await dialog.CaptureFileAsync(CameraCaptureUIMode.Photo);
+                if(file != null)
+                {
+                    BitmapImage bitmapImage = new BitmapImage();
+                    using (IRandomAccessStream fileStream = await file.OpenAsync(FileAccessMode.Read))
+                    {
+                        bitmapImage.SetSource(fileStream);
+                    }
+                    Photo.Source = bitmapImage;
+                    //ResetButton.Visibility = Visibility.Visible;
+
+                    // Store the file path in Application Data
+                    //appSettings[photoKey] = file.Path;
+                }
+                else
+                {
+                    rootPage.NotifyUser("No photo captured.", NotifyType.StatusMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                rootPage.NotifyUser(ex.Message, NotifyType.ErrorMessage);
+            }
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

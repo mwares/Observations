@@ -11,7 +11,7 @@ namespace Observations.Parse
     public class PupilManagement
     {
         //Saves a new or existing pupil
-        public async void SavePupil(Pupil pupil)
+        public async Task SavePupil(Pupil pupil)
         {
             ParseObject pupilParse = new ParseObject("Pupil");
             pupilParse.ObjectId = (string.IsNullOrEmpty(pupil.Id)) ? null : pupil.Id;
@@ -24,7 +24,7 @@ namespace Observations.Parse
         }
 
         //Deletes a pupil
-        public async void DeletePupil(Pupil pupil)
+        public async Task DeletePupil(Pupil pupil)
         {
             ParseObject PupilToDelete = await GetPupilParseObject(pupil.Id);
             await PupilToDelete.DeleteAsync();

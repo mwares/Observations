@@ -12,8 +12,11 @@ namespace Observations.ViewModel
     public class PupilViewModel
     {
         public List<PupilSurname> Items { get; set; }
+        private PupilManagement pm;
+
         public PupilViewModel()
         {
+            pm = new PupilManagement();
         }
 
         public async Task LoadDataAsync()
@@ -30,6 +33,11 @@ namespace Observations.ViewModel
         public async Task AddPupil()
         {
 
+        }
+
+        public async Task Save(Pupil pupil)
+        {
+            await pm.SavePupil(pupil);
         }
     }
 }

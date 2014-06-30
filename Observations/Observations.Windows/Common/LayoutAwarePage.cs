@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation.Collections;
+using winFoundation = Windows.Foundation;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -12,7 +13,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Observations.WindowsRT.Common
 {
-    [Windows.Foundation.Metadata.WebHostHidden]
+    [winFoundation.Metadata.WebHostHidden]
     public class LayoutAwarePage : Page
     {
         /// <summary>

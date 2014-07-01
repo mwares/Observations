@@ -19,6 +19,8 @@ using Windows.Storage.AccessCache;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
 using Observations.ViewModel;
+using Parse;
+using Observations.Entities;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -32,6 +34,7 @@ namespace Observations.WindowsRT.Views
 
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        StorageFile file;
 
         MainPage rootPage = MainPage.Current;
 
@@ -114,8 +117,8 @@ namespace Observations.WindowsRT.Views
                 CameraCaptureUI dialog = new CameraCaptureUI();
                 Size aspectRatio = new Size(7, 5);
                 dialog.PhotoSettings.CroppedAspectRatio = aspectRatio;
-
-                StorageFile file = await dialog.CaptureFileAsync(CameraCaptureUIMode.Photo);
+                
+                file = await dialog.CaptureFileAsync(CameraCaptureUIMode.Photo);
                 if(file != null)
                 {
                     BitmapImage bitmapImage = new BitmapImage();
@@ -140,9 +143,16 @@ namespace Observations.WindowsRT.Views
             }
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private async void Save_Click(object sender, RoutedEventArgs e)
         {
-            
+            ImageToByteArrayConverter imageConverter = new ImageToByteArrayConverter();
+            ParseFile pf = new ParseFile(file.Name, await imageConverter.GetByteArray(file));
+            Pupil pupil = new Pupil();
+            pupil.Forename = Forename.Text;
+            pupil.Surname = Surname.Text;
+            pupil.DateOfBirth = DOB.Date.Date;
+            pupil.Image = pf;//new ParseFile(file.Path.ToString(), await imageConverter.GetByteArray(file));
+            await pupilsViewModel.Save(pupil);
         }
     }
 }

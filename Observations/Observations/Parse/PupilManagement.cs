@@ -13,14 +13,23 @@ namespace Observations.Parse
         //Saves a new or existing pupil
         public async Task SavePupil(Pupil pupil)
         {
-            ParseObject pupilParse = new ParseObject("Pupil");
-            pupilParse.ObjectId = (string.IsNullOrEmpty(pupil.Id)) ? null : pupil.Id;
-            pupilParse["Forename"] = pupil.Forename;
-            pupilParse["Surname"] = pupil.Surname;
-            pupilParse["DOB"] = pupil.DateOfBirth;
-            pupilParse["Photo"] = pupil.Image;
+            try
+            {
+                ParseObject pupilParse = new ParseObject("Pupil");
+                pupilParse.ObjectId = (string.IsNullOrEmpty(pupil.Id)) ? null : pupil.Id;
+                pupilParse["Forename"] = pupil.Forename;
+                pupilParse["Surname"] = pupil.Surname;
+                pupilParse["DOB"] = pupil.DateOfBirth;
 
-            await pupilParse.SaveAsync();
+                await pupil.Image.SaveAsync();
+                pupilParse["Photo"] = pupil.Image;
+
+                await pupilParse.SaveAsync();
+            }
+            catch (ParseException ex)
+            {
+                throw;
+            }
         }
 
         //Deletes a pupil
@@ -177,8 +186,8 @@ namespace Observations.Parse
             p.Forename = pupilParse.Get<string>("Forename");
             p.Surname = pupilParse.Get<string>("Surname");
             p.DateOfBirth = pupilParse.Get<DateTime>("DOB");
-            //p.Image = pupilParse.Get<string>("Photo");
-            p.Image = GetRandomImage();
+            p.Image = pupilParse.Get<ParseFile>("Photo");
+            //p.Image = GetRandomImage();
 
             return p;
         }

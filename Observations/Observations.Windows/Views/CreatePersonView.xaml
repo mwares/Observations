@@ -75,7 +75,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="320"/>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="220"/>
                 <ColumnDefinition Width="*"/>
@@ -87,7 +87,7 @@
             <TextBlock Text="Surname" Grid.Column="3" FontSize="24.67" VerticalAlignment="Center"/>
             <TextBox x:Name="Surname" Grid.Column="4" FontSize="24.67" Height="45" Margin="10,0,10,0"/>
             <TextBlock Text="Date of Birth" Grid.Row="1" Grid.Column="1" FontSize="24.67" VerticalAlignment="Center"/>
-            <TextBox x:Name="DOB" Grid.Row="1" Grid.Column="2" FontSize="24.67" Height="45" Margin="10,0,10,0"/>
+            <DatePicker x:Name="DOB" Grid.Row="1" Grid.Column="2" FontSize="24.67" Height="45" Margin="10,0,10,0"/>
 
         </Grid>
     </Grid>

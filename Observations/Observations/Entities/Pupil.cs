@@ -16,7 +16,7 @@ namespace Observations.Entities
 
         public DateTime DateOfBirth { get; set; }
 
-        public string Image { get; set; }
+        public ParseFile Image { get; set; }
     }
 
     //public class Item : System.ComponentModel.INotifyPropertyChanged

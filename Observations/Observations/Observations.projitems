@@ -18,4 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Parse\UserManagement.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PupilViewModel.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Images\765-default-person.png" />
+  </ItemGroup>
 </Project>

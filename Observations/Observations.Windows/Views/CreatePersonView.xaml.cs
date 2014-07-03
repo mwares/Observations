@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Observations.ViewModel;
 using Parse;
 using Observations.Entities;
+using Windows.Storage.Pickers;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -39,6 +40,8 @@ namespace Observations.WindowsRT.Views
         MainPage rootPage = MainPage.Current;
 
         PupilViewModel pupilsViewModel;
+
+        public string ParseObjectId { get; set; }
 
         /// <summary>
         /// NavigationHelper is used on each page to aid in navigation and 
@@ -71,8 +74,21 @@ namespace Observations.WindowsRT.Views
         /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
         /// a dictionary of state preserved by this page during an earlier
         /// session. The state will be null the first time a page is visited.</param>
-        private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            if (e.NavigationParameter != null)
+            {
+                if (((Pupil)e.NavigationParameter).Image.Url != null)
+                {
+                    BitmapImage image;
+                    image = new BitmapImage(((Pupil)e.NavigationParameter).Image.Url);
+                    Photo.Source = image;
+                }
+                ParseObjectId = ((Pupil)e.NavigationParameter).Id;
+                Forename.Text = ((Pupil)e.NavigationParameter).Forename;
+                Surname.Text = ((Pupil)e.NavigationParameter).Surname;
+                DOB.Date = ((Pupil)e.NavigationParameter).DateOfBirth;
+            }
         }
 
         /// <summary>
@@ -117,20 +133,11 @@ namespace Observations.WindowsRT.Views
                 CameraCaptureUI dialog = new CameraCaptureUI();
                 Size aspectRatio = new Size(7, 5);
                 dialog.PhotoSettings.CroppedAspectRatio = aspectRatio;
-                
-                file = await dialog.CaptureFileAsync(CameraCaptureUIMode.Photo);
-                if(file != null)
-                {
-                    BitmapImage bitmapImage = new BitmapImage();
-                    using (IRandomAccessStream fileStream = await file.OpenAsync(FileAccessMode.Read))
-                    {
-                        bitmapImage.SetSource(fileStream);
-                    }
-                    Photo.Source = bitmapImage;
-                    //ResetButton.Visibility = Visibility.Visible;
 
-                    // Store the file path in Application Data
-                    //appSettings[photoKey] = file.Path;
+                file = await dialog.CaptureFileAsync(CameraCaptureUIMode.Photo);
+                if (file != null)
+                {
+                    DisplayPhoto(file);
                 }
                 else
                 {
@@ -143,16 +150,51 @@ namespace Observations.WindowsRT.Views
             }
         }
 
+        private async void DisplayPhoto(StorageFile file)
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+            using (IRandomAccessStream fileStream = await file.OpenAsync(FileAccessMode.Read))
+            {
+                bitmapImage.SetSource(fileStream);
+            }
+            Photo.Source = bitmapImage;
+        }
+
         private async void Save_Click(object sender, RoutedEventArgs e)
         {
             ImageToByteArrayConverter imageConverter = new ImageToByteArrayConverter();
-            ParseFile pf = new ParseFile(file.Name, await imageConverter.GetByteArray(file));
             Pupil pupil = new Pupil();
+            if (file != null)
+            {
+                ParseFile pf = new ParseFile(file.Name, await imageConverter.GetByteArray(file));
+                pupil.Image = pf;
+            }
+            pupil.Id = ParseObjectId;
             pupil.Forename = Forename.Text;
             pupil.Surname = Surname.Text;
             pupil.DateOfBirth = DOB.Date.Date;
-            pupil.Image = pf;//new ParseFile(file.Path.ToString(), await imageConverter.GetByteArray(file));
             await pupilsViewModel.Save(pupil);
+            this.Frame.Navigate()
+        }
+
+        private async void AddImage_Click(object sender, RoutedEventArgs e)
+        {
+            FileOpenPicker openPicker = new FileOpenPicker();
+            openPicker.ViewMode = PickerViewMode.Thumbnail;
+            openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            openPicker.FileTypeFilter.Add(".jpg");
+            openPicker.FileTypeFilter.Add(".jpeg");
+            openPicker.FileTypeFilter.Add(".png");
+
+            // Launch file open picker and caller app is suspended and may be terminated if required
+            file = await openPicker.PickSingleFileAsync();
+            if(file != null)
+                DisplayPhoto(file);
+        }
+
+        private async void Photo_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
     }
 }

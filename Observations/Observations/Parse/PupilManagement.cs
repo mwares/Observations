@@ -6,6 +6,12 @@ using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 
+
+using Xamarin.Forms;
+using Observations.Helper;
+using System.Reflection;
+//using Windows.ApplicationModel.Resources.Core;
+
 namespace Observations.Parse
 {
     public class PupilManagement
@@ -21,9 +27,11 @@ namespace Observations.Parse
                 pupilParse["Surname"] = pupil.Surname;
                 pupilParse["DOB"] = pupil.DateOfBirth;
 
-                await pupil.Image.SaveAsync();
-                pupilParse["Photo"] = pupil.Image;
-
+                if (pupil.Image != null)
+                {
+                    await pupil.Image.SaveAsync();
+                    pupilParse["Photo"] = pupil.Image;
+                }
                 await pupilParse.SaveAsync();
             }
             catch (ParseException ex)
@@ -186,26 +194,17 @@ namespace Observations.Parse
             p.Forename = pupilParse.Get<string>("Forename");
             p.Surname = pupilParse.Get<string>("Surname");
             p.DateOfBirth = pupilParse.Get<DateTime>("DOB");
-            p.Image = pupilParse.Get<ParseFile>("Photo");
-            //p.Image = GetRandomImage();
+            p.Image = (pupilParse.Get<ParseFile>("Photo") != null) ? pupilParse.Get<ParseFile>("Photo") : GetDefaultImage();
 
             return p;
         }
 
-        private string GetRandomImage()
+        private ParseFile GetDefaultImage()
         {
-            Random r = new Random(1);
-            switch (r.Next(3))
-            {
-                case 1:
-                    return "http://cf2.imgobject.com/t/p/w500/bueVXkpCDPX0TlsWd3Uk7QKO3kD.jpg";
-                case 2:
-                    return "http://cf2.imgobject.com/t/p/w500/mzlw8rHGUSDobS1MJgz8jXXPM06.jpg";
-                case 3:
-                    return "http://cf2.imgobject.com/t/p/w500/5LjbAjkPBUOD9N2QFPSuTyhomx4.jpg";
-                default:
-                    return "http://cf2.imgobject.com/t/p/w500/bueVXkpCDPX0TlsWd3Uk7QKO3kD.jpg";
-            }
+            Image image = new Image();
+            image.Source = ImageSource.FromResource("Observations.Images.765-default-person.png");
+            return new ParseFile("DefaultImage", ConvertFileToByteArray.GetEmbeddedResourceBytes(typeof(PupilManagement).GetTypeInfo().Assembly, "765-default-person.png"));
+            //System.Reflection.Assembly asm = Assembly.Load(typeof(PupilManagement).GetTypeInfo().Assembly, ")
         }
     }
 }

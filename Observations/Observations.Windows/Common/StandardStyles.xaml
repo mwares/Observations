@@ -821,9 +821,10 @@
 
     <!-- Grid-appropriate 250 pixel square item template as seen in the GroupedItemsPage and ItemsPage -->
     <DataTemplate x:Key="Standard250x250ItemTemplate">
+        
         <Grid HorizontalAlignment="Left" Width="250" Height="250">
             <Border Background="{StaticResource ListViewItemPlaceholderBackgroundThemeBrush}">
-                <Image Source="{Binding Image.Url}" Stretch="UniformToFill"/>
+                <Image Source="{Binding Image.Url, TargetNullValue='../Assets/765-default-person.png'}" Stretch="UniformToFill"/>
             </Border>
             <StackPanel VerticalAlignment="Bottom" Background="{StaticResource ListViewItemOverlayBackgroundThemeBrush}">
                 <TextBlock Text="{Binding Surname}" Foreground="{StaticResource ListViewItemOverlayForegroundThemeBrush}" Style="{StaticResource SurnameTextStyle}" Height="60" Margin="15,0,15,0"/>
@@ -840,7 +841,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Border Background="{StaticResource ListViewItemPlaceholderBackgroundThemeBrush}" Width="110" Height="110">
-                <Image Source="{Binding Image.Url}" Stretch="UniformToFill"/>
+                <Image Source="{Binding Image.Url}"  Stretch="UniformToFill"/>
             </Border>
             <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="10,0,0,0">
                 <TextBlock Text="{Binding Surname}" Style="{StaticResource SurnameTextStyle}" TextWrapping="NoWrap"/>
@@ -1004,4 +1005,6 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    
 </ResourceDictionary>

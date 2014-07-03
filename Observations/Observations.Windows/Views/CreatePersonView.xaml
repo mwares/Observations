@@ -13,12 +13,31 @@
     <Page.Resources>
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
         <x:String x:Key="AppName">My Application</x:String>
+        <Flyout x:Key="ImagePreviewFlyout" Placement="Bottom">
+            <StackPanel Orientation="Horizontal">
+                <AppBarButton x:Name="TakePhoto_2" Label="Take Photo" Icon="Camera" ToolTipService.ToolTip="Take Photo" Click="TakePhoto_Click" Grid.Row="2" />
+                <AppBarButton x:Name="AddPhoto_2" Label="Add Photo" Icon="Pictures" ToolTipService.ToolTip="Add Photo" Click="AddImage_Click" Grid.Row="2" Grid.Column="2" />
+            </StackPanel>
+            <!--<Flyout.FlyoutPresenterStyle>
+                <Style TargetType="FlyoutPresenter">
+                    <Setter Property="ScrollViewer.ZoomMode" Value="Enabled"/>
+                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="BorderBrush" Value="Gray"/>
+                    <Setter Property="BorderThickness" Value="5"/>
+                    <Setter Property="MinHeight" Value="75"/>
+                    <Setter Property="MinWidth" Value="150"/>
+                </Style>
+            </Flyout.FlyoutPresenterStyle>-->
+        </Flyout>
     </Page.Resources>
+    
+    
     
     <Page.TopAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Name="TakePhoto" Label="Take Photo" Icon="AddFriend"  Click="TakePhoto_Click" />
+                <AppBarButton x:Name="TakePhoto" Label="Take Photo" Icon="Camera"  Click="TakePhoto_Click" />
+                <AppBarButton x:Name="AddImage" Label="Add Image" Icon="Pictures" Click="AddImage_Click"/>
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.TopAppBar>
@@ -66,7 +85,7 @@
         <!-- screen layout -->
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="140"/>
+                <RowDefinition Height="200"/>
                 <RowDefinition Height="140"/>
                 <RowDefinition Height="140"/>
                 <RowDefinition Height="140"/>
@@ -81,7 +100,22 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-			<Image x:Name="Photo" Source="ms-appx:///Assets/765-default-person.png" HorizontalAlignment="Left" Stretch="UniformToFill" Height="140" Width="150"  VerticalAlignment="Top" />
+            <StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="140"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+    			    <Image Grid.ColumnSpan="2" Tapped="Photo_Tapped" x:Name="Photo" 
+                           Source="ms-appx:///Assets/userplus.png" HorizontalAlignment="Left" 
+                           Stretch="Fill" Height="140" Width="150"  VerticalAlignment="Top" 
+                           FlyoutBase.AttachedFlyout="{StaticResource ImagePreviewFlyout}"/>
+                </Grid>
+            </StackPanel>
             <TextBlock Text="Forename" Grid.Column="1" FontSize="24.67" VerticalAlignment="Center"/>
             <TextBox x:Name="Forename" Grid.Column="2" FontSize="24.67" Height="45" Margin="10,0,10,0"/>
             <TextBlock Text="Surname" Grid.Column="3" FontSize="24.67" VerticalAlignment="Center"/>

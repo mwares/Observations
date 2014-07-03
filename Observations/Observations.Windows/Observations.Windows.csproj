@@ -15,7 +15,9 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>Observations.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <NuGetPackageImportStamp>fe5ceca9</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>d4dae4d7</NuGetPackageImportStamp>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -141,6 +143,7 @@
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\userplus.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -179,6 +182,12 @@
     <Reference Include="Parse.WinRT">
       <HintPath>..\..\packages\Parse.1.2.15\lib\netcore45\Parse.WinRT.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\..\packages\Xamarin.Forms.1.1.1.6206\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\..\packages\Xamarin.Forms.1.1.1.6206\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
@@ -190,6 +199,13 @@
   </PropertyGroup>
   <Import Project="..\Observations\Observations.projitems" Label="Shared" Condition="Exists('..\Observations\Observations.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <Import Project="..\..\packages\Xamarin.Forms.1.1.1.6206\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.1.1.1.6206\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Xamarin.Forms.1.1.1.6206\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.1.1.1.6206\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

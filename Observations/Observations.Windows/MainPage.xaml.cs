@@ -32,6 +32,7 @@ namespace Observations.WindowsRT
         public MainPage()
         {
             this.InitializeComponent();
+            Current = this;
             //MyButton.Click += delegate { MyButton.Content = string.Format(Observations.App.GetMainPageLabel(), count++); };
 
         }

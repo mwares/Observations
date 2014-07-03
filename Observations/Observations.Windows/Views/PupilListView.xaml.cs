@@ -76,5 +76,10 @@ namespace Observations.WindowsRT.Views
         {
             this.Frame.Navigate(typeof(CreatePersonView));
         }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(CreatePersonView), itemGridView.SelectedItem);
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="e9d076c9-2d3e-444b-b1c0-2d8de0691feb" Publisher="CN=mark.wares" Version="1.0.0.0" />
+  <Identity Name="e9d076c9-2d3e-444b-b1c0-2d8de0691feb" Publisher="CN=mark.wares" Version="0.0.1.1" />
   <Properties>
     <DisplayName>Observations.WindowsRT</DisplayName>
     <PublisherDisplayName>mark.wares</PublisherDisplayName>

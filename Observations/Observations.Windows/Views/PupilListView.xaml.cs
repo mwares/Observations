@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Observations.ViewModel;
 using Observations.Entities;
+using Observations.Parse;
 //using Observations.WindowsRT.Temp.SampleData.SampleDataSource;
 
 // The Grouped Items Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234231

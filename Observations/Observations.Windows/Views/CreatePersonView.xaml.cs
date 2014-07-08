@@ -22,6 +22,7 @@ using Observations.ViewModel;
 using Parse;
 using Observations.Entities;
 using Windows.Storage.Pickers;
+using Observations.Parse;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -173,8 +174,12 @@ namespace Observations.WindowsRT.Views
             pupil.Forename = Forename.Text;
             pupil.Surname = Surname.Text;
             pupil.DateOfBirth = DOB.Date.Date;
-            await pupilsViewModel.Save(pupil);
-            this.Frame.Navigate()
+            await pupilsViewModel.SavePupil(pupil);
+
+            if (this.Frame != null)
+            {
+                if (this.Frame != null && this.Frame.CanGoBack) this.Frame.GoBack();
+            }
         }
 
         private async void AddImage_Click(object sender, RoutedEventArgs e)

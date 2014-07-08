@@ -34,6 +34,8 @@
             <ComboBox Name="ListOfPupils" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ListOfPupils_SelectionChanged"/>
             <Button Name="DeletePupil" Content="Delete pupil" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="DeletePupil_Click"/>
             <Button Name="ShowPupils" Content="Show pupil's" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ShowPupils_Click"/>
+            <Button Name="GetObjectivesGrouped" Content="Get All Objectives Grouper" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="GetObjectivesGrouped_Click"/>
+
         </StackPanel>
         
 

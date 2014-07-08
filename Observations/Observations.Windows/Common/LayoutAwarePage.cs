@@ -13,7 +13,27 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Observations.WindowsRT.Common
 {
-    [winFoundation.Metadata.WebHostHidden]
+    /// <summary>
+    /// Typical implementation of Page that provides several important conveniences:
+    /// <list type="bullet">
+    /// <item>
+    /// <description>Application view state to visual state mapping</description>
+    /// </item>
+    /// <item>
+    /// <description>GoBack, GoForward, and GoHome event handlers</description>
+    /// </item>
+    /// <item>
+    /// <description>Mouse and keyboard shortcuts for navigation</description>
+    /// </item>
+    /// <item>
+    /// <description>State management for navigation and process lifetime management</description>
+    /// </item>
+    /// <item>
+    /// <description>A default view model</description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    [Windows.Foundation.Metadata.WebHostHidden]
     public class LayoutAwarePage : Page
     {
         /// <summary>
@@ -518,8 +538,5 @@ namespace Observations.WindowsRT.Common
             }
         }
     }
-        
-
 }
-
 

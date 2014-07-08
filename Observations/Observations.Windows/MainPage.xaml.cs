@@ -1,5 +1,6 @@
 ﻿using Observations.Entities;
 using Observations.Parse;
+using Observations.ViewModel;
 using Observations.WindowsRT.Views;
 using Parse;
 using System;
@@ -66,7 +67,7 @@ namespace Observations.WindowsRT
 
         private async void GetUser_Click(object sender, RoutedEventArgs e)
         {
-            PupilManagement pm = new PupilManagement();
+            PupilViewModel pm = new PupilViewModel();
             Pupil p = await pm.GetPupil("TYfQ7Q9qUz");
         }
 
@@ -77,20 +78,20 @@ namespace Observations.WindowsRT
             p.Forename = Forename.Text;
             p.Surname = Surname.Text;
             p.DateOfBirth = new DateTime(DOB.Date.Year, DOB.Date.Month, DOB.Date.Day);
-            PupilManagement pm = new PupilManagement();
+            PupilViewModel pm = new PupilViewModel();
             pm.SavePupil(p);
          }
 
         private void DeletePupil_Click(object sender, RoutedEventArgs e)
         {
             Pupil pupil = (Pupil)ListOfPupils.SelectedItem;
-            PupilManagement pm = new PupilManagement();
+            PupilViewModel pm = new PupilViewModel();
             pm.DeletePupil(pupil);
         }
 
         private async void GetAllPupil_Click(object sender, RoutedEventArgs e)
         {
-            PupilManagement pm = new PupilManagement();
+            PupilViewModel pm = new PupilViewModel();
             List<Pupil> pupils = await pm.GetAllPupilsByClass("xxx");
 
             ListOfPupils.ItemsSource = pupils;
@@ -139,6 +140,13 @@ namespace Observations.WindowsRT
             //{
             //    StatusBlock.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             //}
+        }
+
+        private async void GetObjectivesGrouped_Click(object sender, RoutedEventArgs e)
+        {
+            //ObjectiveViewModel ovm = new ObjectiveViewModel();
+            //List<ObjectivesGrouped> obs = await ovm.GetAllObjectiviesGrouped();
+            this.Frame.Navigate(typeof(ObjectiveCategoryView));
         }
 
     }

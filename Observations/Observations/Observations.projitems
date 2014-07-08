@@ -10,13 +10,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Objective.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Pupil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ConvertFileToByteArray.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\NotifyTaskCompletion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\iManagement.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Parse\PupilManagement.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Parse\UserManagement.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ObjectiveViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PupilViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\UserManagement.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Images\765-default-person.png" />

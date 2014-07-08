@@ -126,6 +126,9 @@
     <Compile Include="Views\CreatePersonView.xaml.cs">
       <DependentUpon>CreatePersonView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ObjectiveCategoryView.xaml.cs">
+      <DependentUpon>ObjectiveCategoryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PupilListView.xaml.cs">
       <DependentUpon>PupilListView.xaml</DependentUpon>
     </Compile>
@@ -167,6 +170,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CreatePersonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ObjectiveCategoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

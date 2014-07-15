@@ -10,6 +10,11 @@
                 <ResourceDictionary Source="Common/StandardStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <x:String x:Key="AppName">Assessments</x:String>
+            <SolidColorBrush x:Key="ListBoxFocusBackgroundThemeBrush" Color="Transparent"/>
+            <SolidColorBrush x:Key="ListBoxItemPressedBackgroundThemeBrush" Color="DarkOliveGreen"/>
+            <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrush" Color="DarkOliveGreen"/>
+            <SolidColorBrush x:Key="ListBoxItemSelectedPointerOverBackgroundThemeBrush" Color="DarkOliveGreen"/>
+                             
         </ResourceDictionary>
     </Application.Resources>
     

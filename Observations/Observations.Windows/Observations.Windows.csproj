@@ -18,6 +18,7 @@
     <NuGetPackageImportStamp>d4dae4d7</NuGetPackageImportStamp>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
+    <ExpressionBlendVersion>12.0.50429.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -120,14 +121,26 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\ObjectiveLearners.xaml.cs">
+      <DependentUpon>ObjectiveLearners.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CapturePhoto.xaml.cs">
       <DependentUpon>CapturePhoto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateObservationView.xaml.cs">
+      <DependentUpon>CreateObservationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreatePersonView.xaml.cs">
       <DependentUpon>CreatePersonView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ObjectiveCategoryView.xaml.cs">
       <DependentUpon>ObjectiveCategoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ObjectiveItemsView.xaml.cs">
+      <DependentUpon>ObjectiveItemsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ObservationsHubView.xaml.cs">
+      <DependentUpon>ObservationsHubView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PupilListView.xaml.cs">
       <DependentUpon>PupilListView.xaml</DependentUpon>
@@ -137,6 +150,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="Assets\SampleData\SampleDataObjective.json" />
     <None Include="Observations.Windows_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -165,15 +179,36 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Properties\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
+    <Page Include="UserControls\ObjectiveLearners.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CapturePhoto.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CreateObservationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreatePersonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ObjectiveCategoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ObjectiveItemsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ObservationsHubView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

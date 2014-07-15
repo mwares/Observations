@@ -17,11 +17,14 @@ namespace Observations.ViewModel
         {
             try
             {
-                ParseQuery<ParseObject> query = ParseObject.GetQuery("Objectives");
-                IEnumerable<ParseObject> results = await query.FindAsync();
+                ParseQuery<ParseObject> queryObjectives = ParseObject.GetQuery("Objectives");
+                IEnumerable<ParseObject> resultsObjectivies = await queryObjectives.FindAsync();
+
+                //ParseQuery<ParseObject>
+                
 
                 List<Objective> objectives = new List<Objective>();
-                foreach (var parseObject in results)
+                foreach (var parseObject in resultsObjectivies)
                 {
                     Objective p = GetObjectiveFromParseObject(parseObject);
 
@@ -61,6 +64,7 @@ namespace Observations.ViewModel
                     ParentId = item.ParentId,
                     Header = item.Header,
                     Order = item.Order,
+                    HasChildCategory = item.HasChildCategory,
                     ChildObjectives = await GetParentAndChildObjectivies(item.Id, allObjectivies)
                 });
             }
@@ -80,6 +84,7 @@ namespace Observations.ViewModel
             o.Header = objectiveParse.Get<string>("Header");
             o.ParentId = (objectiveParse.Get<string>("ParentObjectId") != null) ? objectiveParse.Get<string>("ParentObjectId") : null;
             o.Order = objectiveParse.Get<int>("Order");
+            o.HasChildCategory = objectiveParse.Get<bool>("HasChildCategory");
             return o;
         }
     }

@@ -11,12 +11,14 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Objective.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Entities\Pupil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Observation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Learner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ConvertFileToByteArray.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\NotifyTaskCompletion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\iManagement.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ObjectiveViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ObservationViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PupilViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\UserManagement.cs" />
   </ItemGroup>

@@ -79,16 +79,16 @@ namespace Observations.WindowsRT.Views
         {
             if (e.NavigationParameter != null)
             {
-                if (((Pupil)e.NavigationParameter).Image.Url != null)
+                if (((Learner)e.NavigationParameter).Image.Url != null)
                 {
                     BitmapImage image;
-                    image = new BitmapImage(((Pupil)e.NavigationParameter).Image.Url);
+                    image = new BitmapImage(((Learner)e.NavigationParameter).Image.Url);
                     Photo.Source = image;
                 }
-                ParseObjectId = ((Pupil)e.NavigationParameter).Id;
-                Forename.Text = ((Pupil)e.NavigationParameter).Forename;
-                Surname.Text = ((Pupil)e.NavigationParameter).Surname;
-                DOB.Date = ((Pupil)e.NavigationParameter).DateOfBirth;
+                ParseObjectId = ((Learner)e.NavigationParameter).Id;
+                Forename.Text = ((Learner)e.NavigationParameter).Forename;
+                Surname.Text = ((Learner)e.NavigationParameter).Surname;
+                DOB.Date = ((Learner)e.NavigationParameter).DateOfBirth;
             }
         }
 
@@ -164,7 +164,7 @@ namespace Observations.WindowsRT.Views
         private async void Save_Click(object sender, RoutedEventArgs e)
         {
             ImageToByteArrayConverter imageConverter = new ImageToByteArrayConverter();
-            Pupil pupil = new Pupil();
+            Learner pupil = new Learner();
             if (file != null)
             {
                 ParseFile pf = new ParseFile(file.Name, await imageConverter.GetByteArray(file));

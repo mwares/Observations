@@ -824,10 +824,23 @@
         
         <Grid HorizontalAlignment="Left" Width="250" Height="250">
             <Border Background="{StaticResource ListViewItemPlaceholderBackgroundThemeBrush}">
-                <Image Source="{Binding Image.Url, TargetNullValue='../Assets/765-default-person.png'}" Stretch="UniformToFill"/>
+                <Image Source="{Binding Image.Url, TargetNullValue='../Assets/765-default-person.png'}" Stretch="Fill"/>
             </Border>
             <StackPanel VerticalAlignment="Bottom" Background="{StaticResource ListViewItemOverlayBackgroundThemeBrush}">
                 <TextBlock Text="{Binding Surname}" Foreground="{StaticResource ListViewItemOverlayForegroundThemeBrush}" Style="{StaticResource SurnameTextStyle}" Height="60" Margin="15,0,15,0"/>
+                <TextBlock Text="{Binding Forename}" Foreground="{StaticResource ListViewItemOverlaySecondaryForegroundThemeBrush}" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Standard100x100ItemTemplate">
+
+        <Grid HorizontalAlignment="Left" Width="100" Height="100">
+            <Border Background="{StaticResource ListViewItemPlaceholderBackgroundThemeBrush}">
+                <Image Source="{Binding Image.Url, TargetNullValue='../Assets/765-default-person.png'}" Stretch="Fill"/>
+            </Border>
+            <StackPanel VerticalAlignment="Bottom" Background="{StaticResource ListViewItemOverlayBackgroundThemeBrush}">
+                <TextBlock Text="{Binding Surname}" Foreground="{StaticResource ListViewItemOverlayForegroundThemeBrush}" Style="{StaticResource SurnameTextStyle}" Height="25" Margin="15,0,15,0"/>
                 <TextBlock Text="{Binding Forename}" Foreground="{StaticResource ListViewItemOverlaySecondaryForegroundThemeBrush}" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
             </StackPanel>
         </Grid>
@@ -1005,6 +1018,22 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="AddObservationMenuButton" TargetType="ListBoxItem" >
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Margin" Value="0,0,0,0"/>
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
     
-    
+    <DataTemplate x:Key="DataTemplateListBoxItem">
+    	<Grid>
+            <TextBlock Margin="32,0,0,0" Text="{Binding Header}" Foreground="White"/>
+        </Grid>
+    </DataTemplate>
+
+
 </ResourceDictionary>

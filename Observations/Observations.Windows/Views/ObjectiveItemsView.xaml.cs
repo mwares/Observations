@@ -1,12 +1,9 @@
-﻿using Observations.Entities;
-using Observations.ViewModel;
-using Observations.WindowsRT.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Observations.WindowsRT.Common;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -16,21 +13,20 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Observations.Entities;
 
-// The Items Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234233
+// The Item Detail Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234232
 
 namespace Observations.WindowsRT.Views
 {
     /// <summary>
-    /// A page that displays a collection of item previews.  In the Split Application this page
-    /// is used to display and select one of the available groups.
+    /// A page that displays details for a single item within a group while allowing gestures to
+    /// flip through other items belonging to the same group.
     /// </summary>
-    public sealed partial class ObjectiveCategoryView : LayoutAwarePage
+    public sealed partial class ObjectiveItemsView : LayoutAwarePage
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-
-        ObjectiveViewModel objectiveViewModel = new ObjectiveViewModel();
 
         /// <summary>
         /// This can be changed to a strongly typed view model.
@@ -49,7 +45,7 @@ namespace Observations.WindowsRT.Views
             get { return this.navigationHelper; }
         }
 
-        public ObjectiveCategoryView()
+        public ObjectiveItemsView()
         {
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
@@ -67,20 +63,18 @@ namespace Observations.WindowsRT.Views
         /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
         /// a dictionary of state preserved by this page during an earlier
         /// session.  The state will be null the first time a page is visited.</param>
-        private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            // TODO: Assign a bindable collection of items to this.DefaultViewModel["Items"]
-            if (e.NavigationParameter == null)
+            object navigationParameter;
+            if (e.PageState != null && e.PageState.ContainsKey("SelectedItem"))
             {
-                await objectiveViewModel.LoadDataAsync();
-                itemsViewSource.Source = objectiveViewModel.Items;
+                navigationParameter = e.PageState["SelectedItem"];
             }
-            else
-            {
-                itemsViewSource.Source = ((ObjectivesGrouped)e.NavigationParameter).ChildObjectives;
-            }
-            
 
+            // TODO: Assign a bindable group to this.DefaultViewModel["Group"]
+            // TODO: Assign a collection of bindable items to this.DefaultViewModel["Items"]
+            // TODO: Assign the selected item to this.flipView.SelectedItem
+            itemsViewSource.Source = ((ObjectivesGrouped)e.NavigationParameter).ChildObjectives;
         }
 
         #region NavigationHelper registration
@@ -105,19 +99,5 @@ namespace Observations.WindowsRT.Views
         }
 
         #endregion
-
-        private void itemGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            ObjectivesGrouped item = ((ObjectivesGrouped)e.ClickedItem);
-            if (item.HasChildCategory)
-                this.Frame.Navigate(typeof(ObjectiveCategoryView), item);
-            else
-                this.Frame.Navigate(typeof(ObjectiveItemsView), item);
-        }
-
-    }
-    public class Test
-    {
-        public string Header { get; set; }
     }
 }

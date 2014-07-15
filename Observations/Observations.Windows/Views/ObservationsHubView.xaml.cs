@@ -1,12 +1,8 @@
-﻿using Observations.Entities;
-using Observations.ViewModel;
-using Observations.WindowsRT.Common;
+﻿using Observations.WindowsRT.Common;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -17,20 +13,17 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Items Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234233
+// The Hub Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=321224
 
 namespace Observations.WindowsRT.Views
 {
     /// <summary>
-    /// A page that displays a collection of item previews.  In the Split Application this page
-    /// is used to display and select one of the available groups.
+    /// A page that displays a grouped collection of items.
     /// </summary>
-    public sealed partial class ObjectiveCategoryView : LayoutAwarePage
+    public sealed partial class ObservationsHubView : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-
-        ObjectiveViewModel objectiveViewModel = new ObjectiveViewModel();
 
         /// <summary>
         /// This can be changed to a strongly typed view model.
@@ -49,12 +42,13 @@ namespace Observations.WindowsRT.Views
             get { return this.navigationHelper; }
         }
 
-        public ObjectiveCategoryView()
+        public ObservationsHubView()
         {
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
         }
+
 
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
@@ -67,20 +61,9 @@ namespace Observations.WindowsRT.Views
         /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
         /// a dictionary of state preserved by this page during an earlier
         /// session.  The state will be null the first time a page is visited.</param>
-        private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            // TODO: Assign a bindable collection of items to this.DefaultViewModel["Items"]
-            if (e.NavigationParameter == null)
-            {
-                await objectiveViewModel.LoadDataAsync();
-                itemsViewSource.Source = objectiveViewModel.Items;
-            }
-            else
-            {
-                itemsViewSource.Source = ((ObjectivesGrouped)e.NavigationParameter).ChildObjectives;
-            }
-            
-
+            // TODO: Assign a collection of bindable groups to this.DefaultViewModel["Groups"]
         }
 
         #region NavigationHelper registration
@@ -105,19 +88,5 @@ namespace Observations.WindowsRT.Views
         }
 
         #endregion
-
-        private void itemGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            ObjectivesGrouped item = ((ObjectivesGrouped)e.ClickedItem);
-            if (item.HasChildCategory)
-                this.Frame.Navigate(typeof(ObjectiveCategoryView), item);
-            else
-                this.Frame.Navigate(typeof(ObjectiveItemsView), item);
-        }
-
-    }
-    public class Test
-    {
-        public string Header { get; set; }
     }
 }

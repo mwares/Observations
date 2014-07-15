@@ -68,23 +68,23 @@ namespace Observations.WindowsRT
         private async void GetUser_Click(object sender, RoutedEventArgs e)
         {
             PupilViewModel pm = new PupilViewModel();
-            Pupil p = await pm.GetPupil("TYfQ7Q9qUz");
+            Learner p = await pm.GetPupil("TYfQ7Q9qUz");
         }
 
         private void AddPupil_Click(object sender, RoutedEventArgs e)
         {
-            Pupil p = new Pupil();
+            Learner p = new Learner();
             p.Id = Id.Text;
             p.Forename = Forename.Text;
             p.Surname = Surname.Text;
             p.DateOfBirth = new DateTime(DOB.Date.Year, DOB.Date.Month, DOB.Date.Day);
             PupilViewModel pm = new PupilViewModel();
             pm.SavePupil(p);
-         }
+        }
 
         private void DeletePupil_Click(object sender, RoutedEventArgs e)
         {
-            Pupil pupil = (Pupil)ListOfPupils.SelectedItem;
+            Learner pupil = (Learner)ListOfPupils.SelectedItem;
             PupilViewModel pm = new PupilViewModel();
             pm.DeletePupil(pupil);
         }
@@ -92,7 +92,7 @@ namespace Observations.WindowsRT
         private async void GetAllPupil_Click(object sender, RoutedEventArgs e)
         {
             PupilViewModel pm = new PupilViewModel();
-            List<Pupil> pupils = await pm.GetAllPupilsByClass("xxx");
+            List<Learner> pupils = await pm.GetAllPupilsByClass("xxx");
 
             ListOfPupils.ItemsSource = pupils;
             ListOfPupils.DisplayMemberPath = "Forename";
@@ -101,7 +101,7 @@ namespace Observations.WindowsRT
 
         private void ListOfPupils_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Pupil p = (Pupil)ListOfPupils.SelectedItem;
+            Learner p = (Learner)ListOfPupils.SelectedItem;
             if (p != null)
             {
                 Id.Text = p.Id;
@@ -147,6 +147,11 @@ namespace Observations.WindowsRT
             //ObjectiveViewModel ovm = new ObjectiveViewModel();
             //List<ObjectivesGrouped> obs = await ovm.GetAllObjectiviesGrouped();
             this.Frame.Navigate(typeof(ObjectiveCategoryView));
+        }
+
+        private void AddObservation_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(CreateObservationView));
         }
 
     }

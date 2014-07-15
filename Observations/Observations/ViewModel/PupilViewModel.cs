@@ -16,14 +16,14 @@ namespace Observations.ViewModel
 {
     public class PupilViewModel
     {
-        public List<PupilSurname> Items { get; set; }
+        public List<LearnerSurname> Items { get; set; }
 
         //Saves a new or existing pupil
-        public async Task SavePupil(Pupil pupil)
+        public async Task SavePupil(Learner pupil)
         {
             try
             {
-                ParseObject pupilParse = new ParseObject("Pupil");
+                ParseObject pupilParse = new ParseObject("Learner");
                 pupilParse.ObjectId = (string.IsNullOrEmpty(pupil.Id)) ? null : pupil.Id;
                 pupilParse["Forename"] = pupil.Forename;
                 pupilParse["Surname"] = pupil.Surname;
@@ -47,13 +47,13 @@ namespace Observations.ViewModel
             var pupils = await GetAllPupilsByClass("ClassId");
 
             var pupilsBySurname = pupils.GroupBy(x => x.Surname[0])
-                .Select(x => new PupilSurname { Surname = x.Key.ToString(), Pupils = x.ToList() })
+                .Select(x => new LearnerSurname { Surname = x.Key.ToString(), Pupils = x.ToList() })
                 .OrderBy(x => x.Surname);
             Items = pupilsBySurname.ToList();
         }
 
         //Deletes a pupil
-        public async Task DeletePupil(Pupil pupil)
+        public async Task DeletePupil(Learner pupil)
         {
             ParseObject PupilToDelete = await GetPupilParseObject(pupil.Id);
             await PupilToDelete.DeleteAsync();
@@ -64,7 +64,7 @@ namespace Observations.ViewModel
         {
             try
             {
-                ParseQuery<ParseObject> query = ParseObject.GetQuery("Pupil");
+                ParseQuery<ParseObject> query = ParseObject.GetQuery("Learner");
                 ParseObject po = await query.GetAsync(Id);
                 return po;
             }
@@ -75,13 +75,13 @@ namespace Observations.ViewModel
         }
 
         //Get pupil by Id
-        public async Task<Pupil> GetPupil(string Id)
+        public async Task<Learner> GetPupil(string Id)
         {
             try
             {
                 ParseObject pupil = await GetPupilParseObject(Id);
 
-                return GetPupilFromParseObject(pupil);
+                return GetLearnerFromParseObject(pupil);
             }
             catch (ParseException ex)
             {
@@ -91,7 +91,7 @@ namespace Observations.ViewModel
         }
 
         //Get pupil by Surname
-        public async Task<List<Pupil>> GetPupilsBySurname(string surname)
+        public async Task<List<Learner>> GetPupilsBySurname(string surname)
         {
             throw new NotImplementedException();
         }
@@ -102,17 +102,17 @@ namespace Observations.ViewModel
         /// </summary>
         /// <param name="ClassId"></param>
         /// <returns></returns>
-        public async Task<List<Pupil>> GetAllPupilsByClass(string ClassId)
+        public async Task<List<Learner>> GetAllPupilsByClass(string ClassId)
         {
             try
             {
-                var query = ParseObject.GetQuery("Pupil");
+                var query = ParseObject.GetQuery("Learner");
                 //IEnumerable<ParseObject> results = await query.FindAsync().ConfigureAwait(false);
                 IEnumerable<ParseObject> results = await query.FindAsync();
-                List<Pupil> pupils = new List<Pupil>();
+                List<Learner> pupils = new List<Learner>();
                 foreach (var parseObject in results)
                 {
-                    Pupil p = GetPupilFromParseObject(parseObject);
+                    Learner p = GetLearnerFromParseObject(parseObject);
                     
                     pupils.Add(p);
                 }
@@ -125,23 +125,23 @@ namespace Observations.ViewModel
             }
         }
 
-        public async Task<List<PupilSurname>> GetAllPupilsByClassGroupBySurname(string ClassId)
+        public async Task<List<LearnerSurname>> GetAllPupilsByClassGroupBySurname(string ClassId)
         {
             try
             {
-                var query = ParseObject.GetQuery("Pupil");
+                var query = ParseObject.GetQuery("Learner");
                 IEnumerable<ParseObject> results = await query.FindAsync().ConfigureAwait(false);
 
-                var pupils = new List<Pupil>();
+                var pupils = new List<Learner>();
                 foreach (var parseObject in results)
                 {
-                    Pupil p = GetPupilFromParseObject(parseObject);
+                    Learner p = GetLearnerFromParseObject(parseObject);
 
                     pupils.Add(p);
                 }
 
                 var PupilsBySurname = pupils.GroupBy(x => x.Surname)
-                    .Select(x => new PupilSurname { Surname = x.Key.ToString(), Pupils = x.ToList() });
+                    .Select(x => new LearnerSurname { Surname = x.Key.ToString(), Pupils = x.ToList() });
                 return PupilsBySurname.ToList();
 
             }
@@ -157,20 +157,20 @@ namespace Observations.ViewModel
 
             try
             {
-                var query = ParseObject.GetQuery("Pupil");
+                var query = ParseObject.GetQuery("Learner");
                 IEnumerable<ParseObject> results = await query.FindAsync().ConfigureAwait(false);
 
-                var pupils = new List<Pupil>();
+                var pupils = new List<Learner>();
                 foreach (var parseObject in results)
                 {
-                    Pupil p = GetPupilFromParseObject(parseObject);
+                    Learner p = GetLearnerFromParseObject(parseObject);
 
                     pupils.Add(p);
                 }
 
                 var query2 = from item in pupils
-                            orderby ((Pupil)item).Surname
-                            group item by ((Pupil)item).Surname[0] into g
+                            orderby ((Learner)item).Surname
+                            group item by ((Learner)item).Surname[0] into g
                             select new { GroupName = g.Key, Items = g };
 
                 foreach (var g in query2)
@@ -199,9 +199,9 @@ namespace Observations.ViewModel
         /// </summary>
         /// <param name="pupilParse"></param>
         /// <returns></returns>
-        private Pupil GetPupilFromParseObject(ParseObject pupilParse)
+        public Learner GetLearnerFromParseObject(ParseObject pupilParse)
         {
-            Pupil p = new Pupil();
+            Learner p = new Learner();
             p.Id = pupilParse.ObjectId;
             p.Forename = pupilParse.Get<string>("Forename");
             p.Surname = pupilParse.Get<string>("Surname");
@@ -211,7 +211,7 @@ namespace Observations.ViewModel
             return p;
         }
 
-        private ParseFile GetDefaultImage()
+        public ParseFile GetDefaultImage()
         {
             Image image = new Image();
             image.Source = ImageSource.FromResource("Observations.Images.765-default-person.png");

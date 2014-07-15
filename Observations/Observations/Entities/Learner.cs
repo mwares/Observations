@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Observations.Entities
 {
-    public class Pupil
+    public class Learner
     {
         public string Id { get; set; }
 
@@ -19,11 +19,11 @@ namespace Observations.Entities
         public ParseFile Image { get; set; }
     }
 
-    public class PupilSurname
+    public class LearnerSurname
     {
         public string Surname { get; set; }
 
-        public List<Pupil> Pupils { get; set; }
+        public List<Learner> Pupils { get; set; }
     }
 
     public class GroupInfoList<T> : List<object>

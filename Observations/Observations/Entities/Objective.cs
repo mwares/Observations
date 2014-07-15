@@ -14,6 +14,8 @@ namespace Observations.Entities
 
         public int Order { get; set; }
 
+        public bool HasChildCategory { get; set; }
+
     }
 
     public class ObjectivesGrouped : IComparable<ObjectivesGrouped>
@@ -25,6 +27,8 @@ namespace Observations.Entities
         public string Header { get; set; }
 
         public int Order { get; set; }
+
+        public bool HasChildCategory { get; set; }
 
         public List<ObjectivesGrouped> ChildObjectives { get; set; }
 

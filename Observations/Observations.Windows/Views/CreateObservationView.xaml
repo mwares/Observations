@@ -15,7 +15,7 @@
 
         <CollectionViewSource
             x:Name="selectedLearners"
-            Source="{Binding Observation.Learners}"
+            Source="{Binding Observation.LearnerSurname}"
             IsSourceGrouped="true"
             ItemsPath="Pupils"/>
 
@@ -49,7 +49,7 @@
             <DatePicker x:Name="ObservationDate" HorizontalAlignment="Stretch" Margin="39,10,0,0"  />
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Learners" Margin="39,10,0,0" FontSize="16"/>
-                <HyperlinkButton Name="AddLearners" Click="AddLearners_Click"/>
+                <HyperlinkButton Name="AddLearners" Content="Add/Remove Learners" FontSize="16" Click="AddLearners_Click"/>
             </StackPanel>
             <SemanticZoom x:Name="Zoom" Grid.Row="1" Margin="0,10,0,0">
                 <SemanticZoom.ZoomedInView>

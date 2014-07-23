@@ -1,21 +1,15 @@
-﻿<Application
-    x:Class="Observations.WindowsRT.App"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Observations.WindowsRT">
-
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Common/StandardStyles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-            <x:String x:Key="AppName">Assessments</x:String>
-            <SolidColorBrush x:Key="ListBoxFocusBackgroundThemeBrush" Color="Transparent"/>
-            <SolidColorBrush x:Key="ListBoxItemPressedBackgroundThemeBrush" Color="DarkOliveGreen"/>
-            <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrush" Color="DarkOliveGreen"/>
-            <SolidColorBrush x:Key="ListBoxItemSelectedPointerOverBackgroundThemeBrush" Color="DarkOliveGreen"/>
-                             
-        </ResourceDictionary>
-    </Application.Resources>
-    
+<Application x:Class="Observations.WindowsRT.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:Observations.WindowsRT">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Common/StandardStyles.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <x:String x:Key="AppName">Assessments</x:String>
+      <SolidColorBrush x:Key="ListBoxFocusBackgroundThemeBrush" Color="Transparent" />
+      <SolidColorBrush x:Key="ListBoxItemPressedBackgroundThemeBrush" Color="DarkOliveGreen" />
+      <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrush" Color="DarkOliveGreen" />
+      <SolidColorBrush x:Key="ListBoxItemSelectedPointerOverBackgroundThemeBrush" Color="DarkOliveGreen" />
+      <vm:ViewModelLocator x:Key="Locator" xmlns:vm="using:Observations.WindowsRT.ViewModel" />
+    </ResourceDictionary>
+  </Application.Resources>
 </Application>

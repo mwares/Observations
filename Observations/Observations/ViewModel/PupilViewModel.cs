@@ -14,7 +14,7 @@ using System.Reflection;
 
 namespace Observations.ViewModel
 {
-    public class PupilViewModel
+    public class PupilViewModel : SharedViewModelBase
     {
         public List<LearnerSurname> Items { get; set; }
 
@@ -28,7 +28,6 @@ namespace Observations.ViewModel
                 pupilParse["Forename"] = pupil.Forename;
                 pupilParse["Surname"] = pupil.Surname;
                 pupilParse["DOB"] = pupil.DateOfBirth;
-
                 if (pupil.Image != null)
                 {
                     await pupil.Image.SaveAsync();
@@ -42,14 +41,14 @@ namespace Observations.ViewModel
             }
         }
 
-        public async Task LoadDataAsync()
+        public async Task<List<LearnerSurname>> LoadDataAsync()
         {
             var pupils = await GetAllPupilsByClass("ClassId");
 
             var pupilsBySurname = pupils.GroupBy(x => x.Surname[0])
                 .Select(x => new LearnerSurname { Surname = x.Key.ToString(), Pupils = x.ToList() })
                 .OrderBy(x => x.Surname);
-            Items = pupilsBySurname.ToList();
+            return pupilsBySurname.ToList();
         }
 
         //Deletes a pupil
@@ -81,7 +80,7 @@ namespace Observations.ViewModel
             {
                 ParseObject pupil = await GetPupilParseObject(Id);
 
-                return GetLearnerFromParseObject(pupil);
+                return await GetLearnerFromParseObject(pupil);
             }
             catch (ParseException ex)
             {
@@ -112,8 +111,8 @@ namespace Observations.ViewModel
                 List<Learner> pupils = new List<Learner>();
                 foreach (var parseObject in results)
                 {
-                    Learner p = GetLearnerFromParseObject(parseObject);
-                    
+                    Learner p = await GetLearnerFromParseObject(parseObject);
+
                     pupils.Add(p);
                 }
 
@@ -135,7 +134,7 @@ namespace Observations.ViewModel
                 var pupils = new List<Learner>();
                 foreach (var parseObject in results)
                 {
-                    Learner p = GetLearnerFromParseObject(parseObject);
+                    Learner p = await GetLearnerFromParseObject(parseObject);
 
                     pupils.Add(p);
                 }
@@ -151,47 +150,47 @@ namespace Observations.ViewModel
             }
         }
 
-        public async Task<List<GroupInfoList<object>>> GetGroupsByLetter()
-        {
-            List<GroupInfoList<object>> groups = new List<GroupInfoList<object>>();
+        //public async Task<List<GroupInfoList<object>>> GetGroupsByLetter()
+        //{
+        //    List<GroupInfoList<object>> groups = new List<GroupInfoList<object>>();
 
-            try
-            {
-                var query = ParseObject.GetQuery("Learner");
-                IEnumerable<ParseObject> results = await query.FindAsync().ConfigureAwait(false);
+        //    try
+        //    {
+        //        var query = ParseObject.GetQuery("Learner");
+        //        IEnumerable<ParseObject> results = await query.FindAsync().ConfigureAwait(false);
 
-                var pupils = new List<Learner>();
-                foreach (var parseObject in results)
-                {
-                    Learner p = GetLearnerFromParseObject(parseObject);
+        //        var pupils = new List<Learner>();
+        //        foreach (var parseObject in results)
+        //        {
+        //            Learner p = GetLearnerFromParseObject(parseObject);
 
-                    pupils.Add(p);
-                }
+        //            pupils.Add(p);
+        //        }
 
-                var query2 = from item in pupils
-                            orderby ((Learner)item).Surname
-                            group item by ((Learner)item).Surname[0] into g
-                            select new { GroupName = g.Key, Items = g };
+        //        var query2 = from item in pupils
+        //                    orderby ((Learner)item).Surname
+        //                    group item by ((Learner)item).Surname[0] into g
+        //                    select new { GroupName = g.Key, Items = g };
 
-                foreach (var g in query2)
-                {
-                    GroupInfoList<object> info = new GroupInfoList<object>();
-                    info.Key = g.GroupName;
-                    foreach (var item in g.Items)
-                    {
-                        info.Add(item);
-                    }
-                    groups.Add(info);
-                }
-                return groups;
-            }
-            catch (ParseException ex)
-            {
-                throw;
-            }
+        //        foreach (var g in query2)
+        //        {
+        //            GroupInfoList<object> info = new GroupInfoList<object>();
+        //            info.Key = g.GroupName;
+        //            foreach (var item in g.Items)
+        //            {
+        //                info.Add(item);
+        //            }
+        //            groups.Add(info);
+        //        }
+        //        return groups;
+        //    }
+        //    catch (ParseException ex)
+        //    {
+        //        throw;
+        //    }
 
-            //var query
-        }
+        //    //var query
+        //}
 
 
         /// <summary>
@@ -199,19 +198,28 @@ namespace Observations.ViewModel
         /// </summary>
         /// <param name="pupilParse"></param>
         /// <returns></returns>
-        public Learner GetLearnerFromParseObject(ParseObject pupilParse)
+        public async Task<Learner> GetLearnerFromParseObject(ParseObject pupilParse)
         {
             Learner p = new Learner();
-            p.Id = pupilParse.ObjectId;
-            p.Forename = pupilParse.Get<string>("Forename");
-            p.Surname = pupilParse.Get<string>("Surname");
-            p.DateOfBirth = pupilParse.Get<DateTime>("DOB");
-            p.Image = (pupilParse.Get<ParseFile>("Photo") != null) ? pupilParse.Get<ParseFile>("Photo") : GetDefaultImage();
+            try
+            {
+                p.Id = pupilParse.ObjectId;
+                p.Forename = (await GetParseObject(pupilParse, "String", "Forename")).ToString();
+                p.Surname = (await GetParseObject(pupilParse, "String", "Surname")).ToString();
+                p.DateOfBirth = (DateTime)(await GetParseObject(pupilParse, "DateTime", "DOB"));
+                p.Image = (await GetParseObject(pupilParse, "ParseFile", "Photo") != null) ? pupilParse.Get<ParseFile>("Photo") : await GetDefaultImage();
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return p;
         }
 
-        public ParseFile GetDefaultImage()
+
+
+        public async Task<ParseFile> GetDefaultImage()
         {
             Image image = new Image();
             image.Source = ImageSource.FromResource("Observations.Images.765-default-person.png");

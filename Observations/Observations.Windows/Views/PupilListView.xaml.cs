@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Navigation;
 using Observations.ViewModel;
 using Observations.Entities;
 using Observations.Parse;
+using Observations.WindowsRT.DesignerViewModel;
 //using Observations.WindowsRT.Temp.SampleData.SampleDataSource;
 
 // The Grouped Items Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234231
@@ -27,22 +28,22 @@ namespace Observations.WindowsRT.Views
     /// </summary>
     public sealed partial class PupilListView : LayoutAwarePage
     {
-        PupilViewModel viewModel = new PupilViewModel();
-
         public PupilListView()
         {
             this.InitializeComponent();
 
-            LoadData();
+            //LoadData();
         }
 
         private async void LoadData()
         {
             //var viewModel = new PupilViewModel();
-            await viewModel.LoadDataAsync();
+            //((PupilListDesignerViewModel)this.DataContext).
+            PupilListDesignerViewModel viewModel = new PupilListDesignerViewModel();
+            await viewModel.LoadData();
             this.DataContext = viewModel;
-            var collectionGroups = groupedItemsViewSource.View.CollectionGroups;
-            ((ListViewBase)this.Zoom.ZoomedOutView).ItemsSource = collectionGroups;
+            //var collectionGroups = groupedItemsViewSource.View.CollectionGroups;
+            //((ListViewBase)this.Zoom.ZoomedOutView).ItemsSource = collectionGroups;
         }
 
         /// <summary>

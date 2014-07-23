@@ -77,7 +77,7 @@ namespace Observations.ViewModel
                 List<Learner> learners = new List<Learner>();
                 foreach (var parseObject in ParseLearners)
                 {
-                    Learner l = pvm.GetLearnerFromParseObject(parseObject);
+                    Learner l = await pvm.GetLearnerFromParseObject(parseObject);
                     learners.Add(l);
                 }
 
@@ -95,10 +95,10 @@ namespace Observations.ViewModel
         {
             var pupils = await GetObservation("ClassId");
 
-            //var pupilsBySurname = pupils.Learners.GroupBy(x => x.Surname[0])
-            //    .Select(x => new LearnerSurname { Surname = x.Key.ToString(), Pupils = x.ToList() })
-            //    .OrderBy(x => x.Surname);
-            //pupils.LearnerSurname = pupilsBySurname.ToList();
+            var pupilsBySurname = pupils.Learners.GroupBy(x => x.Surname[0])
+                .Select(x => new LearnerSurname { Surname = x.Key.ToString(), Pupils = x.ToList() })
+                .OrderBy(x => x.Surname);
+            pupils.LearnerSurname = pupilsBySurname.ToList();
 
             Observation = pupils;
         }

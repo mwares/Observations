@@ -15,7 +15,9 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using Observations.WindowsRT.Common;
 using Observations.WindowsRT.DesignerViewModel;
+using Observations.WindowsRT.Interfaces;
 
 namespace Observations.WindowsRT.ViewModel
 {
@@ -43,16 +45,9 @@ namespace Observations.WindowsRT.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<INavigationService, NavigationService>();
             SimpleIoc.Default.Register<PupilListDesignerViewModel>();
-        }
-
-        public MainViewModel Main
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
+            SimpleIoc.Default.Register<CreateLearnerDesignerViewModel>();
         }
 
         public PupilListDesignerViewModel PupilListDesigner
@@ -63,6 +58,14 @@ namespace Observations.WindowsRT.ViewModel
             }
         }
         
+        public CreateLearnerDesignerViewModel CreateLearnerDesigner
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<CreateLearnerDesignerViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

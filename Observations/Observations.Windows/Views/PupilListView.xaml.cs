@@ -31,19 +31,6 @@ namespace Observations.WindowsRT.Views
         public PupilListView()
         {
             this.InitializeComponent();
-
-            //LoadData();
-        }
-
-        private async void LoadData()
-        {
-            //var viewModel = new PupilViewModel();
-            //((PupilListDesignerViewModel)this.DataContext).
-            PupilListDesignerViewModel viewModel = new PupilListDesignerViewModel();
-            await viewModel.LoadData();
-            this.DataContext = viewModel;
-            //var collectionGroups = groupedItemsViewSource.View.CollectionGroups;
-            //((ListViewBase)this.Zoom.ZoomedOutView).ItemsSource = collectionGroups;
         }
 
         /// <summary>
@@ -57,19 +44,10 @@ namespace Observations.WindowsRT.Views
         /// session.  This will be null the first time a page is visited.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            if(navigationParameter != null)
-            {
-                ObservationViewModel observationViewModel = (ObservationViewModel)navigationParameter;
-                foreach (var item in observationViewModel.Observation.Learners)
-                {
-                    
-                }
-            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-
         }
 
         /// <summary>
@@ -82,14 +60,10 @@ namespace Observations.WindowsRT.Views
         {
         }
 
-        private void Add_Click(object sender, RoutedEventArgs e)
+        private void itemGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.Frame.Navigate(typeof(CreatePersonView));
+
         }
 
-        private void Edit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(CreatePersonView), itemGridView.SelectedItem);
-        }
     }
 }

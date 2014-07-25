@@ -8,7 +8,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 //using Windows.UI.Xaml.Media.Imaging;
 
-namespace Observations.WindowsRT.Common
+namespace Observations.WindowsRT.Common.Converters
 {
     class ImageToByteArrayConverter
     {

@@ -23,6 +23,9 @@ using Parse;
 using Observations.Entities;
 using Windows.Storage.Pickers;
 using Observations.Parse;
+using Observations.WindowsRT.DesignerViewModel;
+using Observations.WindowsRT.Interfaces;
+using Observations.WindowsRT.Common.Converters;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -77,19 +80,19 @@ namespace Observations.WindowsRT.Views
         /// session. The state will be null the first time a page is visited.</param>
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            if (e.NavigationParameter != null)
-            {
-                if (((Learner)e.NavigationParameter).Image.Url != null)
-                {
-                    BitmapImage image;
-                    image = new BitmapImage(((Learner)e.NavigationParameter).Image.Url);
-                    Photo.Source = image;
-                }
-                ParseObjectId = ((Learner)e.NavigationParameter).Id;
-                Forename.Text = ((Learner)e.NavigationParameter).Forename;
-                Surname.Text = ((Learner)e.NavigationParameter).Surname;
-                DOB.Date = ((Learner)e.NavigationParameter).DateOfBirth;
-            }
+            //if (e.NavigationParameter != null)
+            //{
+            //    if (((Learner)e.NavigationParameter).Image.Url != null)
+            //    {
+            //        BitmapImage image;
+            //        image = new BitmapImage(((Learner)e.NavigationParameter).Image.Url);
+            //        Photo.Source = image;
+            //    }
+            //    ParseObjectId = ((Learner)e.NavigationParameter).Id;
+            //    Forename.Text = ((Learner)e.NavigationParameter).Forename;
+            //    Surname.Text = ((Learner)e.NavigationParameter).Surname;
+            //    DOB.Date = ((Learner)e.NavigationParameter).DateOfBirth;
+            //}
         }
 
         /// <summary>
@@ -117,39 +120,16 @@ namespace Observations.WindowsRT.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            navigationHelper.OnNavigatedTo(e);
+            //navigationHelper.OnNavigatedTo(e);
+            ((IViewModel)this.DataContext).OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            navigationHelper.OnNavigatedFrom(e);
+            //navigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion
-
-        private async void TakePhoto_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                CameraCaptureUI dialog = new CameraCaptureUI();
-                Size aspectRatio = new Size(7, 5);
-                dialog.PhotoSettings.CroppedAspectRatio = aspectRatio;
-
-                file = await dialog.CaptureFileAsync(CameraCaptureUIMode.Photo);
-                if (file != null)
-                {
-                    DisplayPhoto(file);
-                }
-                else
-                {
-                    rootPage.NotifyUser("No photo captured.", NotifyType.StatusMessage);
-                }
-            }
-            catch (Exception ex)
-            {
-                rootPage.NotifyUser(ex.Message, NotifyType.ErrorMessage);
-            }
-        }
 
         private async void DisplayPhoto(StorageFile file)
         {
@@ -182,22 +162,7 @@ namespace Observations.WindowsRT.Views
             }
         }
 
-        private async void AddImage_Click(object sender, RoutedEventArgs e)
-        {
-            FileOpenPicker openPicker = new FileOpenPicker();
-            openPicker.ViewMode = PickerViewMode.Thumbnail;
-            openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-            openPicker.FileTypeFilter.Add(".jpg");
-            openPicker.FileTypeFilter.Add(".jpeg");
-            openPicker.FileTypeFilter.Add(".png");
-
-            // Launch file open picker and caller app is suspended and may be terminated if required
-            file = await openPicker.PickSingleFileAsync();
-            if(file != null)
-                DisplayPhoto(file);
-        }
-
-        private async void Photo_Tapped(object sender, TappedRoutedEventArgs e)
+        private void Photo_Tapped(object sender, TappedRoutedEventArgs e)
         {
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }

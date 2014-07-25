@@ -208,6 +208,8 @@ namespace Observations.ViewModel
                 p.Surname = (await GetParseObject(pupilParse, "String", "Surname")).ToString();
                 p.DateOfBirth = (DateTime)(await GetParseObject(pupilParse, "DateTime", "DOB"));
                 p.Image = (await GetParseObject(pupilParse, "ParseFile", "Photo") != null) ? pupilParse.Get<ParseFile>("Photo") : await GetDefaultImage();
+                if (p.Image != null)
+                    p.ImageLocation = p.Image.Url;
             }
             catch (Exception ex)
             {

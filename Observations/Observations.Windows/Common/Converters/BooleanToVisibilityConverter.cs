@@ -4,7 +4,7 @@ using System.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace Observations.WindowsRT.Common
+namespace Observations.WindowsRT.Common.Converters
 {
     public class BooleanToVisibilityConverter : IValueConverter
     {

@@ -26,8 +26,8 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Name="Add" Label="Add" Icon="Add" Click="Add_Click" />
-                <AppBarButton x:Name="Edit" Label="Edit" Icon="Edit" Click="Edit_Click" />
+                <AppBarButton x:Name="Add" Label="Add" Icon="Add" Command="{Binding AddCommand}"/>
+                <AppBarButton x:Name="Edit" Label="Edit" Icon="Edit" Command="{Binding EditCommand}"/>
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
@@ -60,6 +60,7 @@
                 AutomationProperties.AutomationId="ItemGridView"
                 AutomationProperties.Name="Grouped Items"
                 Margin="116,0,40,46"
+                SelectedItem="{Binding SelectedLearner, Mode=TwoWay}"    
                 ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
                 ItemTemplate="{StaticResource Standard250x250ItemTemplate}">
 

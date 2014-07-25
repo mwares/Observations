@@ -109,22 +109,29 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Common\ImageToByteArrayConverter.cs" />
+    <Compile Include="Common\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Common\Converters\DateTimeToDateTimeOffsetConverter.cs" />
+    <Compile Include="Common\Converters\ImageToByteArrayConverter.cs" />
+    <Compile Include="Common\Converters\UriToImageConverter.cs" />
+    <Compile Include="Common\FlyoutHelper.cs" />
+    <Compile Include="Interfaces\INavigationService.cs" />
     <Compile Include="Common\LayoutAwarePage.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
+    <Compile Include="Common\NavigationService.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
-    <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="DesignerViewModel\CreateLearnerDesignerViewModel.cs" />
     <Compile Include="DesignerViewModel\PupilListDesignerViewModel.cs" />
+    <Compile Include="Interfaces\IViewModel.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Messages\LearnerSelectedArgs.cs" />
+    <Compile Include="Messages\ObsNavigationEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserControls\ObjectiveLearners.xaml.cs">
       <DependentUpon>ObjectiveLearners.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\CapturePhoto.xaml.cs">
       <DependentUpon>CapturePhoto.xaml</DependentUpon>
@@ -251,6 +258,7 @@
       <Name>Behaviors SDK %28XAML%29</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>

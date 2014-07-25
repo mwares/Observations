@@ -1,13 +1,14 @@
 ﻿<common:LayoutAwarePage
     x:Name="pageRoot"
     x:Class="Observations.WindowsRT.Views.CreatePersonView"
-    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Observations.WindowsRT.Views"
     xmlns:common="using:Observations.WindowsRT.Common"
+    xmlns:converters="using:Observations.WindowsRT.Common.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource Locator}, Path=CreateLearnerDesigner}"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -15,8 +16,8 @@
         <x:String x:Key="AppName">My Application</x:String>
         <Flyout x:Key="ImagePreviewFlyout" Placement="Bottom">
             <StackPanel Orientation="Horizontal">
-                <AppBarButton x:Name="TakePhoto_2" Label="Take Photo" Icon="Camera" ToolTipService.ToolTip="Take Photo"  Click="TakePhoto_Click" />
-                <AppBarButton x:Name="AddPhoto_2" Label="Add Photo" Icon="Pictures" ToolTipService.ToolTip="Add Photo"  Click="AddImage_Click" />
+                <AppBarButton x:Name="TakePhoto_2" Label="Take Photo" Icon="Camera" ToolTipService.ToolTip="Take Photo" Command="{Binding TakePhoto}" />
+                <AppBarButton x:Name="AddPhoto_2" Label="Add Photo" Icon="Pictures" ToolTipService.ToolTip="Add Photo"  Command="{Binding AddImage}" />
             </StackPanel>
             <Flyout.FlyoutPresenterStyle>
                 <Style TargetType="FlyoutPresenter">
@@ -30,6 +31,8 @@
             </Flyout.FlyoutPresenterStyle>
         </Flyout>
         <Style x:Key="FlyoutPresenterStyle1" TargetType="FlyoutPresenter"/>
+        <converters:DateTimeToDateTimeOffsetConverter x:Name="DateTimeToDateTimeOffsetConverter"/>
+        <converters:UriToImageConverter x:Name="UriToImageConverter"/>
     </Page.Resources>
     
     
@@ -37,8 +40,8 @@
     <Page.TopAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Name="TakePhoto" Label="Take Photo" Icon="Camera"  Click="TakePhoto_Click" />
-                <AppBarButton x:Name="AddImage" Label="Add Image" Icon="Pictures" Click="AddImage_Click"/>
+                <AppBarButton x:Name="TakePhoto" Label="Take Photo" Icon="Camera" Command="{Binding TakePhoto}"/>
+                <AppBarButton x:Name="AddImage" Label="Add Image" Icon="Pictures" Command="{Binding AddImage}"/>
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.TopAppBar>
@@ -46,7 +49,7 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Name="Save" Label="Save" Icon="Save" Click="Save_Click"/>
+                <AppBarButton x:Name="Save" Label="Save" Icon="Save" Command="{Binding Save}"/>
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
@@ -111,19 +114,18 @@
                         <ColumnDefinition Width="75"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-    			    <Image Grid.ColumnSpan="2" Tapped="Photo_Tapped" x:Name="Photo" 
-                           Source="ms-appx:///Assets/userplus.png" HorizontalAlignment="Left" 
+                    <Image Grid.ColumnSpan="2" Tapped="Photo_Tapped"  x:Name="Photo"
+                           Source="{Binding Learner.ImageLocation, Converter={StaticResource UriToImageConverter}, Mode=TwoWay}" HorizontalAlignment="Left" 
                            Stretch="Fill" Height="140" Width="150"  VerticalAlignment="Top" 
                            FlyoutBase.AttachedFlyout="{StaticResource ImagePreviewFlyout}"/>
                 </Grid>
             </StackPanel>
             <TextBlock Text="Forename" Grid.Column="1" FontSize="24.67" VerticalAlignment="Center"/>
-            <TextBox x:Name="Forename" Grid.Column="2" FontSize="24.67" Height="45" Margin="10,0,10,0"/>
+            <TextBox x:Name="Forename" Text="{Binding Learner.Forename, Mode=TwoWay}" Grid.Column="2" FontSize="24.67" Height="45" Margin="10,0,10,0"/>
             <TextBlock Text="Surname" Grid.Column="3" FontSize="24.67" VerticalAlignment="Center"/>
-            <TextBox x:Name="Surname" Grid.Column="4" FontSize="24.67" Height="45" Margin="10,0,10,0"/>
+            <TextBox x:Name="Surname" Text="{Binding Learner.Surname, Mode=TwoWay}" Grid.Column="4" FontSize="24.67" Height="45" Margin="10,0,10,0"/>
             <TextBlock Text="Date of Birth" Grid.Row="1" Grid.Column="1" FontSize="24.67" VerticalAlignment="Center"/>
-            <DatePicker x:Name="DOB" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" FontSize="24.67" Height="45" Margin="10,0,10,0" Width="350"/>
-
+            <DatePicker x:Name="DOB" Date="{Binding Learner.DateOfBirth, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" FontSize="24.67" Height="45" Margin="10,0,10,0" Width="350"/>
         </Grid>
     </Grid>
     

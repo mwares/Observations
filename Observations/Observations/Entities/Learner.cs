@@ -17,7 +17,32 @@ namespace Observations.Entities
 
         public DateTime DateOfBirth { get; set; }
 
-        public ParseFile Image { get; set; }
+        private ParseFile image;
+        public ParseFile Image 
+        {
+            get
+            { return image;}
+            set
+            {
+                if (value == image)
+                    return;
+                image = value;
+                RaisePropertyChanged("Image");
+            } 
+        }
+
+        private Uri imageLocation;
+        public Uri ImageLocation
+        {
+            get { return imageLocation; }
+            set
+            {
+                if (imageLocation == value)
+                    return;
+                imageLocation = value;
+                RaisePropertyChanged("ImageLocation");
+            }
+        }
     }
 
 
